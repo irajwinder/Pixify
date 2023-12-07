@@ -17,7 +17,7 @@ struct SearchImagesView: View {
                 
                 CustomSearchButton {
                     networkManagerInstance.searchPhotos(query: searchText, page: 1) { response in
-                        print(response?.totalPages)
+                        print(response?.total_pages)
                     }
                 }
             }.navigationBarTitle("Search")
