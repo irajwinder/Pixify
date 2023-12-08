@@ -20,8 +20,7 @@ class NetworkManager : NSObject {
     }
     
     func searchPhotos(query: String, page: Int, completion: @escaping (PhotoResponse?) -> Void) {
-       // let apiUrl = "\(baseImageURL)/search/photos?query=\(query)&page=\(page)&client_id=\(clientID)"
-      let apiUrl = "https://api.unsplash.com/search/photos?query=car&page=1&per_page=1&client_id=A5cY7qlhyME6Vqvavt5Qqlr65f4WnIwB7sy5tC9yP44"
+      let apiUrl = "\(baseImageURL)/search/photos?query=\(query)&page=\(page)&client_id=\(clientID)"
         
         // 1. Get the url
         guard let requestURL = URL(string: apiUrl) else {
