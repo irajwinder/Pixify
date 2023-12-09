@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListView: View {
     @Binding var photosResponse: [Photo]
-    @State private var selectedPhoto: Photo? = nil
+    @Binding var collectionResponse: [Collection]
     
     var body: some View {
         List {
@@ -40,6 +40,15 @@ struct ListView: View {
             }
         }
         .navigationBarTitle("Photos List")
+        .onAppear {
+            for collection in collectionResponse {
+                print("Title: \(collection.title)")
+                print("Total Photos: \(collection.total_photos)")
+                print("Cover Photo URL: \(collection.cover_photo.urls.regular)")
+                print("HTML Link: \(collection.links.html)")
+                print("\n")
+            }
+        }
     }
     
     func saveBookmark(photo: Photo) {

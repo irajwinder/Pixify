@@ -5,9 +5,7 @@
 //  Created by Rajwinder Singh on 12/4/23.
 //
 
-import Foundation
-
-struct Photo: Codable, Identifiable {
+struct Photo: Codable {
     let id: String
     let urls: URLs
 }

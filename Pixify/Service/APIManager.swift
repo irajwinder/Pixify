@@ -28,6 +28,18 @@ class APIManager: NSObject {
             return nil
         }
     }
+    
+    // Decode Collection response
+    func decodeCollectionResponse(data: Data) -> CollectionResponse? {
+        do {
+            let decoder = JSONDecoder()
+            let collectionSearchResponse = try decoder.decode(CollectionResponse.self, from: data)
+            return collectionSearchResponse
+        } catch {
+            print("Error decoding JSON: \(error.localizedDescription)")
+            return nil
+        }
+    }
 }
 
 let apiManagerInstance = APIManager.sharedInstance

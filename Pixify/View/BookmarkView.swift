@@ -31,7 +31,7 @@ struct BookmarkView: View {
         }
     }
     
-    func deleteBookmark(at offsets: IndexSet) {
+    func deleteBookmark(offsets: IndexSet) {
           for index in offsets {
               let bookmark = bookmarks[index]
 

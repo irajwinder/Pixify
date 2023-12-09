@@ -16,11 +16,11 @@ class NetworkManager : NSObject {
     
     private override init() {
         super.init()
-       
+        
     }
     
     func searchPhotos(query: String, page: Int, completion: @escaping (PhotoResponse?) -> Void) {
-      let apiUrl = "\(baseImageURL)/search/photos?query=\(query)&page=\(page)&client_id=\(clientID)"
+        let apiUrl = "\(baseImageURL)/search/photos?query=\(query)&page=\(page)&client_id=\(clientID)"
         
         // 1. Get the url
         guard let requestURL = URL(string: apiUrl) else {
@@ -35,7 +35,6 @@ class NetworkManager : NSObject {
         urlRequest.cachePolicy = .useProtocolCachePolicy
         urlRequest.timeoutInterval = 30.0
         urlRequest.httpMethod = "GET"
-       // urlRequest.allHTTPHeaderFields = headers
         
         //3. Make API request
         let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
@@ -47,6 +46,38 @@ class NetworkManager : NSObject {
             // Decode JSON response
             let photoResponse = apiManagerInstance.decodePhotoResponse(data: data)
             completion(photoResponse)
+        }
+        task.resume()
+    }
+    
+    func searchCollection(query: String, page: Int, completion: @escaping (CollectionResponse?) -> Void) {
+        let apiUrl = "\(baseImageURL)/search/collections?query=\(query)&page=\(page)&client_id=\(clientID)"
+        
+        // 1. Get the url
+        guard let requestURL = URL(string: apiUrl) else {
+            print("Invalid URL")
+            completion(nil)
+            return
+        }
+        
+        // 2. Get the URLRequest
+        var urlRequest = URLRequest(url: requestURL)
+        // Sets cache policy and timeout interval for the request
+        urlRequest.cachePolicy = .useProtocolCachePolicy
+        urlRequest.timeoutInterval = 30.0
+        urlRequest.httpMethod = "GET"
+        // urlRequest.allHTTPHeaderFields = headers
+        
+        //3. Make API request
+        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            guard let data = data, error == nil else {
+                print("Error: \(error?.localizedDescription ?? "Unknown error")")
+                completion(nil)
+                return
+            }
+            // Decode JSON response
+            let collectionResponse = apiManagerInstance.decodeCollectionResponse(data: data)
+            completion(collectionResponse)
         }
         task.resume()
     }

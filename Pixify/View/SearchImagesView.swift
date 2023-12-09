@@ -14,6 +14,7 @@ enum SearchType: String, CaseIterable {
 
 struct SearchImagesView: View {
     @State private var photosResponse: [Photo] = []
+    @State private var collectionResponse: [Collection] = []
     
     @State private var searchText = ""
     @State private var selectedSearchType = SearchType.pictures
@@ -47,7 +48,7 @@ struct SearchImagesView: View {
                 alert!
             }
             .navigationDestination(isPresented: $navigateToListView) {
-                ListView(photosResponse: $photosResponse)
+                ListView(photosResponse: $photosResponse, collectionResponse: $collectionResponse)
             }
             .padding()
             .onAppear {
@@ -76,16 +77,23 @@ struct SearchImagesView: View {
     func searchPhotos() {
         networkManagerInstance.searchPhotos(query: searchText, page: 1) { response in
             guard let response = response?.results else {
+                print("Failed to fetch photos")
                 return
             }
-            
             photosResponse = response
             navigateToListView = true
         }
     }
     
     func searchCollection() {
-        //navigateToListView = true
+        networkManagerInstance.searchCollection(query: searchText, page: 1) { response in
+            guard let response = response?.results else {
+                print("Failed to fetch collections")
+                return
+            }
+            collectionResponse = response
+            navigateToListView = true
+        }
     }
 }
 
