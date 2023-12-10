@@ -23,11 +23,10 @@ struct Collection: Codable {
 
 struct CoverPhoto: Codable {
     let id: String
-    let urls: ImageURLs
-    let links: PhotoLinks
+    let urls: CoverPhotoURL
 }
 
-struct ImageURLs: Codable {
+struct CoverPhotoURL: Codable {
     let raw: String
     let full: String
     let regular: String
@@ -35,27 +34,8 @@ struct ImageURLs: Codable {
     let thumb: String
 }
 
-struct PhotoLinks: Codable {
-    let selfLink: String
-    let html: String
-    let download: String
-    
-    enum CodingKeys: String, CodingKey {
-        case selfLink = "self"
-        case html, download
-    }
-}
-
 struct CollectionLinks: Codable {
-    let selfLink: String
-    let html: String
     let photos: String
-    let related: String
-    
-    enum CodingKeys: String, CodingKey {
-        case selfLink = "self"
-        case html, photos, related
-    }
 }
 
 //{
@@ -64,25 +44,9 @@ struct CollectionLinks: Codable {
 //  "results": [
 //    {
 //      "id": 193913,
-//      "title": "Office",
-//      "description": null,
-//      "published_at": "2016-04-15T21:05:44-04:00",
-//      "last_collected_at": "2016-06-02T13:10:03-04:00",
-//      "updated_at": "2016-07-10T11:00:01-05:00",
-//      "featured": true,
 //      "total_photos": 60,
-//      "private": false,
-//      "share_key": "79ec77a237f014935eddc774f6aac1cd",
 //      "cover_photo": {
 //        "id": "pb_lF8VWaPU",
-//        "created_at": "2015-02-12T18:39:43-05:00",
-//        "width": 5760,
-//        "height": 3840,
-//        "color": "#1F1814",
-//        "blur_hash": "L14Bk2M{0d^lR*j[ofWB0K%3^l9Y",
-//        "likes": 786,
-//        "liked_by_user": false,
-//        "description": "A man drinking a coffee.",
 //        "urls": {
 //          "raw": "https://images.unsplash.com/photo-1423784346385-c1d4dac9893a",
 //          "full": "https://hd.unsplash.com/photo-1423784346385-c1d4dac9893a",
@@ -101,3 +65,21 @@ struct CollectionLinks: Codable {
 //    // more collections...
 //  ]
 //}
+//
+//
+//
+//[
+//    {
+//        "id": "B7ZA7c6aPyM",
+//        "urls": {
+//            "raw": "https://images.unsplash.com/photo-1521927336940-cae6e9f22945?ixid=M3w1MzY2MDd8MHwxfGNvbGxlY3Rpb258MXwxOTM5MTN8fHx8fDJ8fDE3MDIyMzk0Mzh8&ixlib=rb-4.0.3",
+//            "full": "https://images.unsplash.com/photo-1521927336940-cae6e9f22945?crop=entropy&cs=srgb&fm=jpg&ixid=M3w1MzY2MDd8MHwxfGNvbGxlY3Rpb258MXwxOTM5MTN8fHx8fDJ8fDE3MDIyMzk0Mzh8&ixlib=rb-4.0.3&q=85",
+//            "regular": "https://images.unsplash.com/photo-1521927336940-cae6e9f22945?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzY2MDd8MHwxfGNvbGxlY3Rpb258MXwxOTM5MTN8fHx8fDJ8fDE3MDIyMzk0Mzh8&ixlib=rb-4.0.3&q=80&w=1080",
+//            "small": "https://images.unsplash.com/photo-1521927336940-cae6e9f22945?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzY2MDd8MHwxfGNvbGxlY3Rpb258MXwxOTM5MTN8fHx8fDJ8fDE3MDIyMzk0Mzh8&ixlib=rb-4.0.3&q=80&w=400",
+//            "thumb": "https://images.unsplash.com/photo-1521927336940-cae6e9f22945?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MzY2MDd8MHwxfGNvbGxlY3Rpb258MXwxOTM5MTN8fHx8fDJ8fDE3MDIyMzk0Mzh8&ixlib=rb-4.0.3&q=80&w=200",
+//            "small_s3": "https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1521927336940-cae6e9f22945"
+//        }
+//    },
+//  //More photos
+//]
+//

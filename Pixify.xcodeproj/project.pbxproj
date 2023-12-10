@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A233A88C2B220E3D0024D285 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A233A88B2B220E3D0024D285 /* CacheManager.swift */; };
+		A23A29492B24F6B3003D650C /* CollectionPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23A29482B24F6B3003D650C /* CollectionPhotos.swift */; };
 		A27D918A2B1ED93C00278B70 /* SearchImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D91892B1ED93C00278B70 /* SearchImagesView.swift */; };
 		A27D918D2B20AAC700278B70 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D918C2B20AAC600278B70 /* Component.swift */; };
 		A27D918F2B20AC8700278B70 /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D918E2B20AC8700278B70 /* BookmarkView.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		A233A88B2B220E3D0024D285 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		A23A29482B24F6B3003D650C /* CollectionPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPhotos.swift; sourceTree = "<group>"; };
 		A27D91892B1ED93C00278B70 /* SearchImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchImagesView.swift; sourceTree = "<group>"; };
 		A27D918C2B20AAC600278B70 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		A27D918E2B20AC8700278B70 /* BookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				A27D91892B1ED93C00278B70 /* SearchImagesView.swift */,
 				A2BE6B3B2B1DF4B7000DD62A /* ListView.swift */,
 				A2D9CEE32B22B528006238BE /* ImageDetailsView.swift */,
+				A23A29482B24F6B3003D650C /* CollectionPhotos.swift */,
 				A27D918E2B20AC8700278B70 /* BookmarkView.swift */,
 			);
 			path = View;
@@ -271,6 +274,7 @@
 				A27D918D2B20AAC700278B70 /* Component.swift in Sources */,
 				A2D9CEE72B237181006238BE /* ImageSearchIntent.swift in Sources */,
 				A27D91922B20ACC000278B70 /* TabBarView.swift in Sources */,
+				A23A29492B24F6B3003D650C /* CollectionPhotos.swift in Sources */,
 				A233A88C2B220E3D0024D285 /* CacheManager.swift in Sources */,
 				A2BE6B3A2B1DF4B7000DD62A /* Pixify.xcdatamodeld in Sources */,
 				A2BE6B5C2B1DF636000DD62A /* DataManager.swift in Sources */,

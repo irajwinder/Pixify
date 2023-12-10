@@ -48,7 +48,7 @@ struct SearchImagesView: View {
                 alert!
             }
             .navigationDestination(isPresented: $navigateToListView) {
-                ListView(photosResponse: $photosResponse, collectionResponse: $collectionResponse)
+                ListView(photosResponse: $photosResponse, collectionResponse: $collectionResponse, selectedSearchType: selectedSearchType)
             }
             .padding()
             .onAppear {

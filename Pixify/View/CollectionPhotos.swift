@@ -1,27 +1,22 @@
 //
-//  ListView.swift
+//  CollectionPhotos.swift
 //  Pixify
 //
-//  Created by Rajwinder Singh on 12/4/23.
+//  Created by Rajwinder Singh on 12/9/23.
 //
 
 import SwiftUI
 
-struct ListView: View {
-    @Binding var photosResponse: [Photo]
-    @Binding var collectionResponse: [Collection]
+struct CollectionPhotos: View {
+    let selectedCollection: Collection
+    @State private var collectionPhotoResponse: [Photo] = []
     
     @State private var showAlert = false
     @State private var alert: Alert?
     
-    var selectedSearchType: SearchType
-    var navigationTitle: String {
-        return selectedSearchType == .pictures ? "Photos" : "Collections"
-    }
-    
     var body: some View {
         List {
-            ForEach(photosResponse, id: \.id) { photo in
+            ForEach(collectionPhotoResponse, id: \.id) { photo in
                 NavigationLink(destination: ImageDetailsView(photo: photo)) {
                     AsyncImage(url: URL(string: photo.urls.small)) { phase in
                         switch phase {
@@ -46,33 +41,25 @@ struct ListView: View {
                     saveBookmark(photo: photo)
                 }
             }
-            
-            ForEach(collectionResponse, id: \.id) { collection in
-                NavigationLink(destination: CollectionPhotos(selectedCollection: collection)) {
-                    AsyncImage(url: URL(string: collection.cover_photo.urls.small)) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 300, height: 200)
-                        case .failure:
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.gray)
-                        @unknown default:
-                            EmptyView()
-                        }
-                    }
-                }
-            }
         }
-        .navigationBarTitle(navigationTitle)
+        .padding()
+        .onAppear {
+            fetchCollectionPhotos()
+        }
+        .navigationBarTitle("Photos")
         .alert(isPresented: $showAlert) {
             alert!
+        }
+    }
+    
+    func fetchCollectionPhotos() {
+        networkManagerInstance.CollectionPhotos(url: selectedCollection.links.photos) { response in
+            guard let response = response else {
+                print("Error getting photos")
+                return
+            }
+            print("Total Photos: \(selectedCollection.total_photos)")
+            collectionPhotoResponse = response
         }
     }
     
@@ -97,3 +84,7 @@ struct ListView: View {
         alert = Validation.showAlert(title: "Success", message: "Successfully save to Bookmark")
     }
 }
+
+//#Preview {
+//    CollectionPhotos()
+//}
