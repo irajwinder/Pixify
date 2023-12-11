@@ -7,48 +7,92 @@
 
 import SwiftUI
 
+class BookmarkIntent: ObservableObject {
+    @Published var bookmarks: [Bookmark] = []
+
+    func fetchBookmarks() {
+        bookmarks = dataManagerInstance.fetchBookmark()
+    }
+
+    func deleteBookmark(offsets: IndexSet) {
+        for index in offsets {
+            let bookmark = bookmarks[index]
+
+            // Delete from FileManager
+            fileManagerClassInstance.deleteImageFromFileManager(relativePath: bookmark.imageURL ?? "")
+
+            // Delete from CoreData
+            dataManagerInstance.deleteEntity(bookmark)
+        }
+
+        // Update the local array after deletion
+        bookmarks.remove(atOffsets: offsets)
+    }
+}
+
 struct BookmarkView: View {
-    @State private var bookmarks: [Bookmark] = []
-    
+    @StateObject private var stateObject = BookmarkIntent()
+
     var body: some View {
         NavigationStack {
             List {
-                ForEach(bookmarks, id: \.self) { bookmark in
+                ForEach(stateObject.bookmarks, id: \.self) { bookmark in
                     if let imageData = fileManagerClassInstance.loadImageDataFromFileManager(relativePath: bookmark.imageURL ?? "") {
                         Image(uiImage: UIImage(data: imageData)!)
                             .resizable()
-                            .scaledToFill()
-//                            .padding(.bottom, 10)
-//                            .frame(width: 300, height: 200)
+                            .frame(width: 300, height: 200)
                     }
                 }
-                .onDelete(perform: deleteBookmark)
+                .onDelete(perform: stateObject.deleteBookmark)
             }
             .onAppear {
-                bookmarks = dataManagerInstance.fetchBookmark()
+                stateObject.fetchBookmarks()
             }
             .navigationBarTitle("Bookmarks")
         }
     }
-    
-    func deleteBookmark(offsets: IndexSet) {
-          for index in offsets {
-              let bookmark = bookmarks[index]
-
-              // Delete from FileManager
-              fileManagerClassInstance.deleteImageFromFileManager(relativePath: bookmark.imageURL ?? "")
-              
-              // Delete from CoreData
-              dataManagerInstance.deleteEntity(bookmark)
-          }
-          // Update the local array after deletion
-          bookmarks.remove(atOffsets: offsets)
-      }
 }
 
 #Preview {
     BookmarkView()
 }
+
+//struct BookmarkView: View {
+//    @State private var bookmarks: [Bookmark] = []
+//    
+//    var body: some View {
+//        NavigationStack {
+//            List {
+//                ForEach(bookmarks, id: \.self) { bookmark in
+//                    if let imageData = fileManagerClassInstance.loadImageDataFromFileManager(relativePath: bookmark.imageURL ?? "") {
+//                        Image(uiImage: UIImage(data: imageData)!)
+//                            .resizable()
+//                            .frame(width: 300, height: 200)
+//                    }
+//                }
+//                .onDelete(perform: deleteBookmark)
+//            }
+//            .onAppear {
+//                bookmarks = dataManagerInstance.fetchBookmark()
+//            }
+//            .navigationBarTitle("Bookmarks")
+//        }
+//    }
+//    
+//    func deleteBookmark(offsets: IndexSet) {
+//          for index in offsets {
+//              let bookmark = bookmarks[index]
+//
+//              // Delete from FileManager
+//              fileManagerClassInstance.deleteImageFromFileManager(relativePath: bookmark.imageURL ?? "")
+//              
+//              // Delete from CoreData
+//              dataManagerInstance.deleteEntity(bookmark)
+//          }
+//          // Update the local array after deletion
+//          bookmarks.remove(atOffsets: offsets)
+//      }
+//}
 
 //    @Environment(\.managedObjectContext) private var viewContext
 //

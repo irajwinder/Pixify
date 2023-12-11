@@ -66,7 +66,6 @@ class NetworkManager : NSObject {
         urlRequest.cachePolicy = .useProtocolCachePolicy
         urlRequest.timeoutInterval = 30.0
         urlRequest.httpMethod = "GET"
-        urlRequest.allHTTPHeaderFields = headers
         
         //3. Make API request
         let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in

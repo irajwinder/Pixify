@@ -136,8 +136,8 @@
 			children = (
 				A27D91892B1ED93C00278B70 /* SearchImagesView.swift */,
 				A2BE6B3B2B1DF4B7000DD62A /* ListView.swift */,
-				A2D9CEE32B22B528006238BE /* ImageDetailsView.swift */,
 				A23A29482B24F6B3003D650C /* CollectionPhotos.swift */,
+				A2D9CEE32B22B528006238BE /* ImageDetailsView.swift */,
 				A27D918E2B20AC8700278B70 /* BookmarkView.swift */,
 			);
 			path = View;

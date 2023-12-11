@@ -12,24 +12,7 @@ struct ImageDetailsView: View {
 
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: photo?.urls.full ?? "")) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFit()
-                case .failure:
-                    Image(systemName: "photo")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.gray)
-                @unknown default:
-                    EmptyView()
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            AsyncImageView(url: URL(string: photo?.urls.full ?? ""))
         }
     }
 }
