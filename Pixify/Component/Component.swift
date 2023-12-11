@@ -47,6 +47,8 @@ struct CustomBookmarkButton: View {
     }
 }
 
+//Download image not AsyncImage
+//Image lazy loading
 struct AsyncImageView: View {
     var url: URL?
     

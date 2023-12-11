@@ -50,12 +50,33 @@ struct ListView: View {
                 CustomBookmarkButton {
                     stateObject.saveBookmark(photo: photo)
                 }
+                .onAppear(perform: {
+                    // Check if the current photo is the last one
+                    if photo.id == observedObject.photosResponse.last?.id {
+                        // Load the next page when the last photo is reached
+                        observedObject.currentPage += 1
+                        observedObject.searchPhotos()
+                        print(observedObject.currentPage)
+                    }
+                })
             }
             
             ForEach(observedObject.collectionResponse, id: \.id) { collection in
                 NavigationLink(destination: CollectionPhotos(selectedCollection: collection)) {
                     AsyncImageView(url: URL(string: collection.cover_photo.urls.small))
                 }
+                CustomBookmarkButton {
+                    
+                }
+                .onAppear(perform: {
+                    // Check if the current collection is the last one
+                    if collection.id == observedObject.collectionResponse.last?.id {
+                        // Load the next page when the last collection is reached
+                        observedObject.currentPage += 1
+                        observedObject.searchCollection()
+                        print(observedObject.currentPage)
+                    }
+                })
             }
         }
         .navigationBarTitle(observedObject.selectedSearchType == .pictures ? "Photos" : "Collections")
@@ -67,61 +88,4 @@ struct ListView: View {
 
 //#Preview {
 //    ListView(observedObject: SearchImagesIntent())
-//}
-
-//struct ListView: View {
-//    @Binding var photosResponse: [Photo]
-//    @Binding var collectionResponse: [Collection]
-//
-//    @State private var showAlert = false
-//    @State private var alert: Alert?
-//
-//    var selectedSearchType: SearchType
-//    var navigationTitle: String {
-//        return selectedSearchType == .pictures ? "Photos" : "Collections"
-//    }
-//
-//    var body: some View {
-//        List {
-//            ForEach(photosResponse, id: \.id) { photo in
-//                NavigationLink(destination: ImageDetailsView(photo: photo)) {
-//                    AsyncImageView(url: URL(string: photo.urls.small))
-//                }
-//                CustomBookmarkButton {
-//                    saveBookmark(photo: photo)
-//                }
-//            }
-//
-//            ForEach(collectionResponse, id: \.id) { collection in
-//                NavigationLink(destination: CollectionPhotos(selectedCollection: collection)) {
-//                    AsyncImageView(url: URL(string: collection.cover_photo.urls.small))
-//                }
-//            }
-//        }
-//        .navigationBarTitle(navigationTitle)
-//        .alert(isPresented: $showAlert) {
-//            alert!
-//        }
-//    }
-//
-//    func saveBookmark(photo: Photo) {
-//        guard let imageURL = URL(string: photo.urls.small) else {
-//            return
-//        }
-//
-//        // Download image
-//        networkManagerInstance.downloadImage(from: imageURL) { imageData in
-//            guard let imageData = imageData else {
-//                return
-//            }
-//            // Save the image data to FileManager
-//            if let relativeURL = fileManagerClassInstance.saveImageToFileManager(imageData: imageData, photo: photo) {
-//                // Save the relative URL to CoreData
-//                dataManagerInstance.saveBookmark(imageURL: relativeURL)
-//            }
-//        }
-//
-//        showAlert = true
-//        alert = Validation.showAlert(title: "Success", message: "Successfully save to Bookmark")
-//    }
 //}
