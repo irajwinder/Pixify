@@ -204,10 +204,10 @@
 			isa = PBXGroup;
 			children = (
 				A2D9CEE62B237181006238BE /* SearchImagesIntent.swift */,
-				A285A8D02B281FFC0083902B /* LazyImageIntent.swift */,
 				A285A8D22B28213B0083902B /* ImageListIntent.swift */,
 				A285A8D42B28216A0083902B /* CollectionListIntent.swift */,
 				A285A8D62B2821910083902B /* BookmarkIntent.swift */,
+				A285A8D02B281FFC0083902B /* LazyImageIntent.swift */,
 			);
 			path = Intent;
 			sourceTree = "<group>";
