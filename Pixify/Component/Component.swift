@@ -49,27 +49,44 @@ struct CustomBookmarkButton: View {
 
 //Download image not AsyncImage
 //Image lazy loading
-struct AsyncImageView: View {
+//struct AsyncImageView: View {
+//    var url: URL?
+//    
+//    var body: some View {
+//        AsyncImage(url: url) { phase in
+//            switch phase {
+//            case .empty:
+//                ProgressView()
+//            case .success(let image):
+//                image
+//                    .resizable()
+//                    .scaledToFill()
+//                    .frame(width: 300, height: 200)
+//            case .failure:
+//                Image(systemName: "photo")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .foregroundColor(.gray)
+//            @unknown default:
+//                EmptyView()
+//            }
+//        }
+//    }
+//}
+
+
+struct LazyImage: View {
+    @StateObject private var stateObject = LazyImageIntent()
     var url: URL?
     
     var body: some View {
-        AsyncImage(url: url) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 300, height: 200)
-            case .failure:
-                Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.gray)
-            @unknown default:
-                EmptyView()
+        Image(uiImage: stateObject.image ?? UIImage(systemName: "photo")!)
+            .resizable()
+            .scaledToFit()
+            .onAppear {
+                if let url = url {
+                    stateObject.loadImages(url: url)
+                }
             }
-        }
     }
 }

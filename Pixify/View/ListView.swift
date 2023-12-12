@@ -7,36 +7,6 @@
 
 import SwiftUI
 
-class ImagesListIntent: ObservableObject {
-    @Published var showAlert = false
-    @Published var alert: Alert?
-    
-    func saveBookmark(photo: Photo) {
-        guard let imageURL = URL(string: photo.urls.small) else {
-            return
-        }
-        
-        // Download image
-        networkManagerInstance.downloadImage(from: imageURL) { [weak self] imageData in
-            guard let self = self, let imageData = imageData else {
-                return
-            }
-            
-            // Save the image data to FileManager
-            if let relativeURL = fileManagerClassInstance.saveImageToFileManager(imageData: imageData, photo: photo) {
-                // Save the relative URL to CoreData
-                dataManagerInstance.saveBookmark(imageURL: relativeURL)
-                
-                // Update state to show the success alert
-                DispatchQueue.main.async {
-                    self.showAlert = true
-                    self.alert = Validation.showAlert(title: "Success", message: "Successfully saved to Bookmark")
-                }
-            }
-        }
-    }
-}
-
 struct ListView: View {
     @StateObject private var stateObject = ImagesListIntent()
     @ObservedObject var observedObject: SearchImagesIntent
@@ -45,7 +15,7 @@ struct ListView: View {
         List {
             ForEach(observedObject.photosResponse, id: \.id) { photo in
                 NavigationLink(destination: ImageDetailsView(photo: photo)) {
-                    AsyncImageView(url: URL(string: photo.urls.small))
+                    LazyImage(url: URL(string: photo.urls.small))
                 }
                 CustomBookmarkButton {
                     stateObject.saveBookmark(photo: photo)
@@ -63,7 +33,7 @@ struct ListView: View {
             
             ForEach(observedObject.collectionResponse, id: \.id) { collection in
                 NavigationLink(destination: CollectionPhotos(selectedCollection: collection)) {
-                    AsyncImageView(url: URL(string: collection.cover_photo.urls.small))
+                    LazyImage(url: URL(string: collection.cover_photo.urls.small))
                 }
                 CustomBookmarkButton {
                     

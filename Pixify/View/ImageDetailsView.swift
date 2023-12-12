@@ -12,7 +12,7 @@ struct ImageDetailsView: View {
 
     var body: some View {
         VStack {
-            AsyncImageView(url: URL(string: photo?.urls.full ?? ""))
+            LazyImage(url: URL(string: photo?.urls.full ?? ""))
         }
     }
 }
