@@ -35,9 +35,6 @@ struct ListView: View {
                 NavigationLink(destination: CollectionPhotos(selectedCollection: collection)) {
                     LazyImage(url: URL(string: collection.cover_photo.urls.small))
                 }
-                CustomBookmarkButton {
-                    
-                }
                 .onAppear(perform: {
                     // Check if the current collection is the last one
                     if collection.id == observedObject.collectionResponse.last?.id {
