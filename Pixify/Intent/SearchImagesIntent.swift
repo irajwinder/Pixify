@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-//If not o
 class SearchImagesIntent: ObservableObject {
     @Published var currentPage = 1
     @Published var photosResponse: [Photo] = []
