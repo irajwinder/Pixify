@@ -11,6 +11,9 @@ struct ListView: View {
     @StateObject private var stateObject = ImagesListIntent()
     @ObservedObject var observedObject: SearchImagesIntent
     
+    @State private var showAlert = false
+    @State private var alert: Alert?
+    
     var body: some View {
         List {
             ForEach(observedObject.photosResponse, id: \.id) { photo in
@@ -19,6 +22,8 @@ struct ListView: View {
                 }
                 CustomBookmarkButton {
                     stateObject.saveBookmark(photo: photo)
+                    self.showAlert = true
+                    self.alert = Validation.showAlert(title: "Success", message: "Successfully saved to Bookmark")
                 }
                 .onAppear(perform: {
                     // Check if the current photo is the last one
@@ -47,8 +52,8 @@ struct ListView: View {
             }
         }
         .navigationBarTitle(observedObject.selectedSearchType == .pictures ? "Photos" : "Collections")
-        .alert(isPresented: $stateObject.showAlert) {
-            stateObject.alert!
+        .alert(isPresented: $showAlert) {
+            alert!
         }
     }
 }

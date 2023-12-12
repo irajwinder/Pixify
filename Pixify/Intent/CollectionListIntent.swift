@@ -9,8 +9,6 @@ import SwiftUI
 
 class CollectionListIntent: ObservableObject {
     @Published var collectionPhotoResponse: [Photo] = []
-    @Published var showAlert = false
-    @Published var alert: Alert?
     
     func fetchCollectionPhotos(url: String) {
         networkManagerInstance.CollectionPhotos(url: url) { [weak self] response in
@@ -39,9 +37,6 @@ class CollectionListIntent: ObservableObject {
                 // Save the relative URL to CoreData
                 dataManagerInstance.saveBookmark(imageURL: relativeURL)
             }
-            
-            self.showAlert = true
-            self.alert = Validation.showAlert(title: "Success", message: "Successfully saved to Bookmark")
         }
     }
 }

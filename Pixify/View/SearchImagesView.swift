@@ -14,6 +14,9 @@ enum SearchType: String, CaseIterable {
 
 struct SearchImagesView: View {
     @StateObject private var stateObject = SearchImagesIntent()
+    @State private var navigateToListView = false
+    @State private var showAlert = false
+    @State private var alert: Alert?
 
     var body: some View {
         NavigationStack {
@@ -22,7 +25,7 @@ struct SearchImagesView: View {
                     CustomSearchField(placeholder: "Enter search text", searchText: $stateObject.searchText)
 
                     CustomSearchButton {
-                        stateObject.validateSearch()
+                        validateSearch()
                     }
                 }
 
@@ -35,10 +38,10 @@ struct SearchImagesView: View {
                 .frame(width: 200)
             }
             .navigationBarTitle("Search")
-            .alert(isPresented: $stateObject.showAlert) {
-                stateObject.alert!
+            .alert(isPresented: $showAlert) {
+                alert!
             }
-            .navigationDestination(isPresented: $stateObject.navigateToListView) {
+            .navigationDestination(isPresented: $navigateToListView) {
                 ListView(observedObject: stateObject)
             }
             .padding()
@@ -47,6 +50,23 @@ struct SearchImagesView: View {
                 let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
                 print(paths[0])
             }
+        }
+    }
+    
+    func validateSearch() {
+        guard Validation.isValidName(stateObject.searchText) else {
+            showAlert = true
+            alert = Validation.showAlert(title: "Error", message: "Enter Search Text")
+            return
+        }
+        
+        switch stateObject.selectedSearchType {
+        case .pictures:
+            stateObject.searchPhotos()
+            navigateToListView = true
+        case .collections:
+            stateObject.searchCollection()
+            navigateToListView = true
         }
     }
 }
