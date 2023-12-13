@@ -1,6 +1,6 @@
 # Pixify
 
-Pixify iOS application designed to search and explore images and collections using the Unsplash API. The app supports iPhone, iPad, and Mac devices and is built using UIKit with a Model-View-Intent (MVI) architecture. 
+Pixify iOS application designed to search and explore images and collections using the Unsplash API. The app supports iPhone, iPad, and Mac devices and is built using SwiftUI with a Model-View-Intent (MVI) architecture. 
 
 ## Table of Contents
 - [Features](#features)
